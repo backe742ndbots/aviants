@@ -23,7 +23,8 @@ export default function WhatsAppIntegration() {
     if (botStatus === "qr" || botStatus === "initializing") {
       interval = setInterval(async () => {
         try {
-          const res = await fetch("http://localhost:3001/api/qr");
+          const baseUrl = (import.meta.env.VITE_WHATSAPP_API_URL ?? "http://localhost:3001").replace(/\/$/, "");
+          const res = await fetch(`${baseUrl}/api/qr`);
           const data = await res.json();
           if (data.ready) {
             setBotStatus("online");
